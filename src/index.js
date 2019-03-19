@@ -1,12 +1,36 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./components/App";
+import {createGlobalStyle} from 'styled-components';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const users = [{
+  id: "1",
+  name: "name1",
+  height: "height1",
+  mass: "mass1",
+  gender: "gender1",
+  edited: "edited1",
+}, {
+  id: "2",
+  name: "name2",
+  height: "height2",
+  mass: "mass2",
+  gender: "gender2",
+  edited: "edited2",
+}];
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const GlobalStyle = createGlobalStyle`
+  body {
+    color: #222;
+    background: #f4f4f4;
+    font: 400 14px CoreSans, Arial, Sans-serif;
+  }
+`;
+
+ReactDOM.render(
+    <React.Fragment>
+      <GlobalStyle/>
+      <App users={users}/>
+    </React.Fragment>,
+    document.getElementById("root")
+);
