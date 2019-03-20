@@ -2,22 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 import {createGlobalStyle} from 'styled-components';
-
-const users = [{
-  id: "1",
-  name: "name1",
-  height: "height1",
-  mass: "mass1",
-  gender: "gender1",
-  edited: "edited1",
-}, {
-  id: "2",
-  name: "name2",
-  height: "height2",
-  mass: "mass2",
-  gender: "gender2",
-  edited: "edited2",
-}];
+import {Provider} from "react-redux";
+import store from "./store";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -28,9 +14,9 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 ReactDOM.render(
-    <React.Fragment>
+    <Provider store={store}>
       <GlobalStyle/>
-      <App users={users}/>
-    </React.Fragment>,
+      <App/>
+    </Provider>,
     document.getElementById("root")
 );

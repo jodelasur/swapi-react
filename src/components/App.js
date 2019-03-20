@@ -6,9 +6,9 @@ const Div = styled.div`
   margin: 20px;
 `;
 
-const App = ({users}) =>
+const App = () =>
     <Div>
-      <Users users={users}/>
+      <Users/>
     </Div>;
 
 export default App;

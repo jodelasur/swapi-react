@@ -1,6 +1,9 @@
 import React from "react";
 import User from "./User";
 import styled from "styled-components";
+import {getUsers} from "../selectors/user";
+import {connect} from "react-redux";
+import {doFetchUsers} from "../actions/user";
 
 const Div = styled.div`
   margin: 20px 0;
@@ -48,26 +51,47 @@ const HeaderSpan = styled.span`
   width: ${props => props.width}
 `;
 
-const Users = ({users}) =>
-    <Div>
-      <HeaderDiv>
-        {Object.keys(COLUMNS).map(key =>
-          <HeaderSpan
-            key={key}
-            width={COLUMNS[key].width}
-          >
-            {COLUMNS[key].label}
-          </HeaderSpan>
-        )}
-      </HeaderDiv>
+class Users extends React.Component {
+  componentDidMount() {
+    this.props.onFetchUsers();
+  }
 
-      {users.map(user =>
-          <User
-              key={user.id}
-              user={user}
-              columns={COLUMNS}
-          />
-      )}
-    </Div>;
+  render() {
+    const {users} = this.props;
+    return (
+        <Div>
+          <HeaderDiv>
+            {Object.keys(COLUMNS).map(key =>
+                <HeaderSpan
+                    key={key}
+                    width={COLUMNS[key].width}
+                >
+                  {COLUMNS[key].label}
+                </HeaderSpan>
+            )}
+          </HeaderDiv>
 
-export default Users;
+          {users.map(user =>
+              <User
+                  key={user.id}
+                  user={user}
+                  columns={COLUMNS}
+              />
+          )}
+        </Div>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  users: getUsers(state),
+});
+
+const mapDispatchToProps = dispatch => ({
+  onFetchUsers: query => dispatch(doFetchUsers(query)),
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Users);
