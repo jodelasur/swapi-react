@@ -73,7 +73,7 @@ class Users extends React.Component {
 
           {users.map(user =>
               <User
-                  key={user.id}
+                  key={user.url}
                   user={user}
                   columns={COLUMNS}
               />
