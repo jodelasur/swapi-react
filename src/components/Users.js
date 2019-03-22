@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {getUsers} from "../selectors/user";
 import {connect} from "react-redux";
 import {doFetchUsers} from "../actions/user";
+import Header from "./Header";
 
 const Div = styled.div`
   margin: 20px 0;
@@ -36,21 +37,6 @@ const COLUMNS = {
   }
 };
 
-const HeaderDiv = styled.div`
-  display: flex;
-  line-height: 24px;
-  font-size: 16px;
-  padding: 0 10px;
-  justify-content: space-between;
-`;
-
-const HeaderSpan = styled.span`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0 5px;
-  width: ${props => props.width}
-`;
-
 class Users extends React.Component {
   componentDidMount() {
     this.props.onFetchUsers();
@@ -60,16 +46,7 @@ class Users extends React.Component {
     const {users} = this.props;
     return (
         <Div>
-          <HeaderDiv>
-            {Object.keys(COLUMNS).map(key =>
-                <HeaderSpan
-                    key={key}
-                    width={COLUMNS[key].width}
-                >
-                  {COLUMNS[key].label}
-                </HeaderSpan>
-            )}
-          </HeaderDiv>
+          <Header columns={COLUMNS}/>
 
           {users.map(user =>
               <User

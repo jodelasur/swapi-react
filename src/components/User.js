@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Vehicles from "./Vehicles";
 
 const Div = styled.div`
   display: flex;
@@ -28,14 +29,17 @@ const User = ({user, columns}) => {
   } = user;
 
   return (
-      <Div>
-        <Span width={columns.name.width}>{name}</Span>
-        <Span width={columns.height.width}>{height}</Span>
-        <Span width={columns.mass.width}>{mass}</Span>
-        <Span width={columns.gender.width}>{gender}</Span>
-        <Span width={columns.edited.width}>{new Date(edited).toLocaleString()}</Span>
-        <Span width={columns.showVehicles.width}>Button here</Span>
-      </Div>
+      <>
+        <Div>
+          <Span width={columns.name.width}>{name}</Span>
+          <Span width={columns.height.width}>{height}</Span>
+          <Span width={columns.mass.width}>{mass}</Span>
+          <Span width={columns.gender.width}>{gender}</Span>
+          <Span width={columns.edited.width}>{new Date(edited).toLocaleString()}</Span>
+          <Span width={columns.showVehicles.width}>Button here</Span>
+        </Div>
+        <Vehicles/>
+      </>
   );
 };
 
