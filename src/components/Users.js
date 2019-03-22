@@ -31,8 +31,8 @@ const COLUMNS = {
     label: "Edited",
     width: "20%",
   },
-  showVehicles: {
-    label: "Show Vehicles",
+  vehicles: {
+    label: "Vehicles",
     width: "20%",
   }
 };

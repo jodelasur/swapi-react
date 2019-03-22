@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Vehicles from "./Vehicles";
 
-const Div = styled.div`
-  display: flex;
+const Wrapper = styled.div`
   line-height: 24px;
   white-space: nowrap;
   margin: 10px 0;
@@ -12,11 +11,25 @@ const Div = styled.div`
   border: 1px solid #e3e3e3;
 `;
 
+const UserSpecific = styled.div`
+  display: flex;
+`;
+
 const Span = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 5px;
   width: ${props => props.width};
+  text-align: center;
+`;
+
+const Button = styled.button`
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #dddddd;
+  background: transparent;
+  color: #808080;
+  cursor: pointer;
 `;
 
 const User = ({user, columns}) => {
@@ -29,17 +42,23 @@ const User = ({user, columns}) => {
   } = user;
 
   return (
-      <>
-        <Div>
-          <Span width={columns.name.width}>{name}</Span>
-          <Span width={columns.height.width}>{height}</Span>
-          <Span width={columns.mass.width}>{mass}</Span>
-          <Span width={columns.gender.width}>{gender}</Span>
-          <Span width={columns.edited.width}>{new Date(edited).toLocaleString()}</Span>
-          <Span width={columns.showVehicles.width}>Button here</Span>
-        </Div>
+    <Wrapper>
+      <UserSpecific>
+        <Span width={columns.name.width}>{name}</Span>
+        <Span width={columns.height.width}>{height}</Span>
+        <Span width={columns.mass.width}>{mass}</Span>
+        <Span width={columns.gender.width}>{gender}</Span>
+        <Span width={columns.edited.width}>{new Date(edited).toLocaleString()}</Span>
+        <Span width={columns.vehicles.width}>
+          <Button>
+            Show Vehicles
+          </Button>
+        </Span>
+      </UserSpecific>
+      <div>
         <Vehicles/>
-      </>
+      </div>
+    </Wrapper>
   );
 };
 
