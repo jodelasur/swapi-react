@@ -33,7 +33,7 @@ const User = ({user, columns}) => {
         <Span width={columns.height.width}>{height}</Span>
         <Span width={columns.mass.width}>{mass}</Span>
         <Span width={columns.gender.width}>{gender}</Span>
-        <Span width={columns.edited.width}>{edited}</Span>
+        <Span width={columns.edited.width}>{new Date(edited).toLocaleString()}</Span>
         <Span width={columns.showVehicles.width}>Button here</Span>
       </Div>
   );
