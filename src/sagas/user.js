@@ -26,12 +26,6 @@ function* handleFetchUserVehicles(action) {
           url => call(fetchVehicleByUrl, url)
       )
   );
-  // const vehicle = yield call(fetchVehicleByUrl, 'https://swapi.co/api/vehicles/14/');
-  // const vehicles = yield [vehicle];
-  // yield console.log(vehicles);
-  // const vehicles2 = yield all(responses.map(response => response));
-  // console.log(vehicles2);
-
 
   yield put(doAddVehicles(userUrl, vehicles));
   yield put(doToggleShowVehiclesUser(userUrl));
