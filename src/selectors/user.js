@@ -1,11 +1,11 @@
-const getUsers = ({userState}) =>
-    userState.users;
+const getUsers = ({usersState}) =>
+    usersState.users;
 
-const getFetchError = ({userState}) =>
-    userState.error;
+const getFetchError = ({usersState}) =>
+    usersState.error;
 
-const getUser = ({userState}, userUrl) =>
-    userState.users.find(user => user.url === userUrl);
+const getUser = ({usersState}, userUrl) =>
+    usersState.users.find(user => user.url === userUrl);
 
 export {
   getUsers,
