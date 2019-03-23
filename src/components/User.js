@@ -57,7 +57,7 @@ function User(props) {
           <Span width={columns.gender.width}>{gender}</Span>
           <Span width={columns.edited.width}>{new Date(edited).toLocaleString()}</Span>
           <Span width={columns.vehicles.width}>
-            <Button onClick={() => props.onToggleShowVehicles(url, !!vehicles)}>
+            <Button onClick={() => props.onToggleShowVehicles(url, vehicles)}>
               {showVehicles ? "Hide" : "Show"} Vehicles
             </Button>
           </Span>
@@ -72,9 +72,10 @@ function User(props) {
 }
 
 // TODO: Check about derived props
-const showVehicles = (dispatch, url, vehiclesAlreadyFetched) => {
-  dispatch(doToggleShowVehiclesUser(url));
-  if (!vehiclesAlreadyFetched) {
+const showVehicles = (dispatch, url, vehicles) => {
+  if (vehicles) {
+    dispatch(doToggleShowVehiclesUser(url));
+  } else {
     dispatch(doFetchVehiclesUser(url));
   }
 };

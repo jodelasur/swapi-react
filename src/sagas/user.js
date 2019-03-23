@@ -1,6 +1,8 @@
-import {call, put} from "redux-saga/effects";
+import {all, call, put, select} from "redux-saga/effects";
 import {fetchUsers} from "../api/user";
-import {doAddUsers, doAddVehicles, doFetchErrorUsers} from "../actions/user";
+import {doAddUsers, doAddVehicles, doFetchErrorUsers, doToggleShowVehiclesUser} from "../actions/user";
+import {getUser} from "../selectors/user";
+import {fetchVehicleByUrl} from "../api/vehicle";
 
 function* handleFetchUsers(action) {
   const {query} = action;
@@ -14,27 +16,25 @@ function* handleFetchUsers(action) {
 }
 
 function* handleFetchUserVehicles(action) {
-  const vehicles = [
-    {
-      url: 'url1',
-      name: "Snowspeeder",
-      model: "t-47 airspeeder",
-      manufacturer: "Incom corporation",
-      vehicleClass: "airspeeder",
-    },
-    {
-      url: 'url2',
-      name: "Imperial Speeder Bike",
-      model: "74-Z speeder bike",
-      manufacturer: "Aratech Repulsor Company",
-      vehicleClass: "speeder",
-    },
-  ];
-
   const {userUrl} = action;
 
-  // yield console.log(action);
+  // TODO: Try to refactor this out (not get state in saga)
+  // https://github.com/redux-saga/redux-saga/tree/master/docs/api#notes-13
+  const user = yield select(getUser, userUrl);
+  const vehicles = yield all(
+      user.vehicleUrls.map(
+          url => call(fetchVehicleByUrl, url)
+      )
+  );
+  // const vehicle = yield call(fetchVehicleByUrl, 'https://swapi.co/api/vehicles/14/');
+  // const vehicles = yield [vehicle];
+  // yield console.log(vehicles);
+  // const vehicles2 = yield all(responses.map(response => response));
+  // console.log(vehicles2);
+
+
   yield put(doAddVehicles(userUrl, vehicles));
+  yield put(doToggleShowVehiclesUser(userUrl));
 }
 
 export {

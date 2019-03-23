@@ -29,8 +29,6 @@ const COLUMNS = {
   },
 };
 
-
-
 const Vehicles = ({vehicles}) =>
     <Div>
       <Header columns={COLUMNS}/>

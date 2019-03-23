@@ -4,7 +4,11 @@ const getUsers = ({userState}) =>
 const getFetchError = ({userState}) =>
     userState.error;
 
+const getUser = ({userState}, userUrl) =>
+    userState.users.find(user => user.url === userUrl);
+
 export {
   getUsers,
   getFetchError,
+  getUser,
 };
