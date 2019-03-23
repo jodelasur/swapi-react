@@ -36,6 +36,12 @@ class Search extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    if (this.input) {
+      this.input.focus();
+    }
+  }
+
   onSubmit(event) {
     event.preventDefault();
     const {query} = this.state;
@@ -56,6 +62,7 @@ class Search extends React.Component {
               type="text"
               value={this.state.query}
               onChange={this.onChange}
+              ref={el => this.input = el}
           />
           <Button type="submit">
             Search
