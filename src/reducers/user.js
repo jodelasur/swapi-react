@@ -1,46 +1,32 @@
-import {USER_ADD_VEHICLES, USER_TOGGLE_SHOW_VEHICLES, USERS_ADD, USERS_FETCH_ERROR} from "../constants/actionTypes";
+import {USER_ADD_VEHICLES, USER_TOGGLE_SHOW_VEHICLES} from "../constants/actionTypes";
 
-const INITIAL_STATE_USERS = {
-  users: [],
-  error: null,
+const INITIAL_STATE_USER = {
+  url: null,
+  name: null,
+  height: null,
+  mass: null,
+  gender: null,
+  edited: null,
+  vehicleUrls: [],
+  vehicles: [],
+  showVehicles: false,
+  isFetchingVehicles: false,
 };
 
-const applyAddUsers = (state, action) => ({
-  users: action.users.map(user =>
-      // TODO: change to spread operator
-      Object.assign({}, user, {showVehicles: false})),
-  error: null,
-});
+const applyToggleShowVehiclesUser = (state, action) => {
+  return state.url !== action.userUrl
+      ? state
+      : {...state, showVehicles: !state.showVehicles};
+};
 
-const applyFetchErrorUsers = (state, action) => ({
-  users: [],
-  error: action.error,
-});
+const applyAddVehicles = (state, action) => {
+  return state.url !== action.userUrl
+      ? state
+      : {...state, vehicles: action.vehicles};
+};
 
-const applyToggleShowVehiclesUser = (state, action) => ({
-  ...state,
-  users: state.users.map(user => {
-    return user.url !== action.userUrl
-        ? user
-        : {...user, showVehicles: !user.showVehicles};
-  })
-});
-
-const applyAddVehicles = (state, action) => ({
-  ...state,
-  users: state.users.map(user => {
-    return user.url !== action.userUrl
-        ? user
-        : {...user, vehicles: action.vehicles};
-  })
-});
-
-function usersReducer(state = INITIAL_STATE_USERS, action) {
+function userReducer(state = INITIAL_STATE_USER, action) {
   switch (action.type) {
-    case USERS_ADD:
-      return applyAddUsers(state, action);
-    case USERS_FETCH_ERROR:
-      return applyFetchErrorUsers(state, action);
     case USER_TOGGLE_SHOW_VEHICLES:
       return applyToggleShowVehiclesUser(state, action);
     case USER_ADD_VEHICLES:
@@ -50,4 +36,4 @@ function usersReducer(state = INITIAL_STATE_USERS, action) {
   }
 }
 
-export default usersReducer;
+export default userReducer;
