@@ -8,6 +8,7 @@ const Div = styled.div`
   padding: 10px;
   border: 1px solid #e3e3e3;
   background: #f4f4f4;
+  text-align: center;
 `;
 
 const COLUMNS = {
@@ -29,16 +30,28 @@ const COLUMNS = {
   },
 };
 
-const Vehicles = ({vehicles}) =>
-    <Div>
-      <Header columns={COLUMNS}/>
-      {vehicles.map(vehicle =>
-        <Vehicle
-          key={vehicle.url}
-          vehicle={vehicle}
-          columns={COLUMNS}
-        />
-      )}
-    </Div>;
+const Vehicles = ({vehicles}) => {
+  if (vehicles.length) {
+    return (
+        <Div>
+          <Header columns={COLUMNS}/>
+          {vehicles.map(vehicle =>
+              <Vehicle
+                  key={vehicle.url}
+                  vehicle={vehicle}
+                  columns={COLUMNS}
+              />
+          )}
+        </Div>
+    );
+  } else {
+    return (
+        <Div>
+          No vehicles for this user.
+        </Div>
+    );
+  }
+};
+
 
 export default Vehicles;
