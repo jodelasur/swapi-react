@@ -63,6 +63,7 @@ class Search extends React.Component {
               value={this.state.query}
               onChange={this.onChange}
               ref={el => this.input = el}
+              placeholder="Enter name here..."
           />
           <Button type="submit">
             Search

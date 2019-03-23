@@ -37,27 +37,21 @@ const COLUMNS = {
   }
 };
 
-class Users extends React.Component {
-  componentDidMount() {
-    this.props.onFetchUsers();
-  }
+function Users(props) {
+  const {users} = props;
+  return (
+      <Div>
+        <Header columns={COLUMNS}/>
 
-  render() {
-    const {users} = this.props;
-    return (
-        <Div>
-          <Header columns={COLUMNS}/>
-
-          {users.map(user =>
-              <User
-                  key={user.url}
-                  user={user}
-                  columns={COLUMNS}
-              />
-          )}
-        </Div>
-    )
-  }
+        {users.map(user =>
+            <User
+                key={user.url}
+                user={user}
+                columns={COLUMNS}
+            />
+        )}
+      </Div>
+  );
 }
 
 const mapStateToProps = state => ({

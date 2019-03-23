@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Vehicles from "./Vehicles";
+import {connect} from "react-redux";
+import {doFetchVehiclesUser, doToggleShowVehiclesUser} from "../actions/user";
 
 const Wrapper = styled.div`
   line-height: 24px;
@@ -32,34 +34,58 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const User = ({user, columns}) => {
+function User(props) {
+  const {user, columns} = props;
   const {
+    url,
     name,
     height,
     mass,
     gender,
     edited,
+    vehicleUrls,
+    showVehicles,
+    vehicles,
   } = user;
 
   return (
-    <Wrapper>
-      <UserSpecific>
-        <Span width={columns.name.width}>{name}</Span>
-        <Span width={columns.height.width}>{height}</Span>
-        <Span width={columns.mass.width}>{mass}</Span>
-        <Span width={columns.gender.width}>{gender}</Span>
-        <Span width={columns.edited.width}>{new Date(edited).toLocaleString()}</Span>
-        <Span width={columns.vehicles.width}>
-          <Button>
-            Show Vehicles
-          </Button>
-        </Span>
-      </UserSpecific>
-      <div>
-        <Vehicles/>
-      </div>
-    </Wrapper>
+      <Wrapper>
+        <UserSpecific>
+          <Span width={columns.name.width}>{name}</Span>
+          <Span width={columns.height.width}>{height}</Span>
+          <Span width={columns.mass.width}>{mass}</Span>
+          <Span width={columns.gender.width}>{gender}</Span>
+          <Span width={columns.edited.width}>{new Date(edited).toLocaleString()}</Span>
+          <Span width={columns.vehicles.width}>
+            <Button onClick={() => props.onToggleShowVehicles(url, !!vehicles)}>
+              {showVehicles ? "Hide" : "Show"} Vehicles
+            </Button>
+          </Span>
+        </UserSpecific>
+        {showVehicles &&
+        <div>
+          <Vehicles vehicleUrls={vehicleUrls} vehicles={vehicles}/>
+        </div>
+        }
+      </Wrapper>
   );
+}
+
+// TODO: Check about derived props
+const showVehicles = (dispatch, url, vehiclesAlreadyFetched) => {
+  dispatch(doToggleShowVehiclesUser(url));
+  if (!vehiclesAlreadyFetched) {
+    dispatch(doFetchVehiclesUser(url));
+  }
 };
 
-export default User;
+
+const mapDispatchToProps = dispatch => ({
+  onToggleShowVehicles: (url, vehiclesAlreadyFetched) =>
+    showVehicles(dispatch, url, vehiclesAlreadyFetched),
+});
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(User);
