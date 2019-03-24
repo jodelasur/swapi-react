@@ -57,7 +57,7 @@ class Users extends Component {
           <InfiniteScroll
               loadMore={this.handleNext}
               hasMore={!!next}
-              loader={<div>Loading...</div>}
+              loader={<div key={0}>Loading...</div>}
           >
             {users.map(user =>
                 <User
