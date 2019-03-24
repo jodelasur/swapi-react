@@ -37,6 +37,7 @@ const COLUMNS = {
   }
 };
 
+// TODO: Add "More" button for paginated results
 function Users(props) {
   const {users} = props;
   return (
