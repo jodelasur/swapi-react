@@ -1,6 +1,6 @@
 import {
   USER_ADD_VEHICLES,
-  USER_FETCH_VEHICLES,
+  USER_FETCH_VEHICLES, USER_TOGGLE_IS_FETCHING_VEHICLES,
   USER_TOGGLE_SHOW_VEHICLES,
   USERS_ADD,
   USERS_FETCH,
@@ -38,6 +38,11 @@ const doAddVehicles = (userUrl, vehicles) => ({
   vehicles,
 });
 
+const doToggleIsFetchingVehicles = userUrl => ({
+  type: USER_TOGGLE_IS_FETCHING_VEHICLES,
+  userUrl,
+});
+
 export {
   doAddUsers,
   doFetchUsers,
@@ -45,4 +50,5 @@ export {
   doToggleShowVehiclesUser,
   doFetchVehiclesUser,
   doAddVehicles,
+  doToggleIsFetchingVehicles,
 };
