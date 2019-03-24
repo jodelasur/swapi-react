@@ -11,6 +11,10 @@ const Div = styled.div`
   margin: 20px 0;
 `;
 
+const Loading = styled.div`
+  text-align: center;
+`;
+
 const COLUMNS = {
   name: {
     label: "Name",
@@ -57,7 +61,7 @@ class Users extends Component {
           <InfiniteScroll
               loadMore={this.handleNext}
               hasMore={!!next}
-              loader={<div key={0}>Loading...</div>}
+              loader={<Loading key={0}>Loading...</Loading>}
           >
             {users.map(user =>
                 <User
