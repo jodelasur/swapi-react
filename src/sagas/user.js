@@ -13,8 +13,6 @@ import {fetchVehicleByUrl} from "../api/vehicle";
 export function* handleSearch(action) {
   const {query} = action;
 
-  yield put(doClearUsers());
-
   try {
     const response = yield call(fetchUsers, query);
     const users = response.results.map(user => ({
@@ -27,6 +25,7 @@ export function* handleSearch(action) {
       vehicleUrls: user.vehicles,
     }));
     const next = response.next;
+    yield put(doClearUsers());
     yield put(doAddUsers(users, next));
   } catch (error) {
     yield put(doFetchErrorUsers(error));

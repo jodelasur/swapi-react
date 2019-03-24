@@ -11,7 +11,10 @@ const Div = styled.div`
   margin: 20px 0;
 `;
 
-const Loading = styled.div`
+const Message = styled.div`
+  margin: 10px 20px 0;
+  padding: 10px;
+  background: #f4f4f4;
   text-align: center;
 `;
 
@@ -58,19 +61,23 @@ class Users extends Component {
     return (
         <Div>
           <Header columns={COLUMNS}/>
-          <InfiniteScroll
-              loadMore={this.handleNext}
-              hasMore={!!next}
-              loader={<Loading key={0}>Loading...</Loading>}
-          >
-            {users.map(user =>
-                <User
-                    key={user.url}
-                    user={user}
-                    columns={COLUMNS}
-                />
-            )}
-          </InfiniteScroll>
+          {users.length
+              ? (
+                  <InfiniteScroll
+                      loadMore={this.handleNext}
+                      hasMore={!!next}
+                      loader={<Message key={0}>Loading...</Message>}
+                  >
+                    {users.map(user =>
+                        <User
+                            key={user.url}
+                            user={user}
+                            columns={COLUMNS}
+                        />
+                    )}
+                  </InfiniteScroll>)
+              : <Message>No results found</Message>
+          }
         </Div>
     );
   }
