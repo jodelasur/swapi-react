@@ -9,17 +9,24 @@ import userReducer, {INITIAL_STATE_USER} from "./user";
 
 const INITIAL_STATE_USERS = {
   users: [],
+  next: null,
   error: null,
 };
 
-const applyAddUsers = (state, action) => ({
-  users: action.users.map(user => {
+const applyAddUsers = (state, action) => {
+  const usersToAdd = action.users.map(user => {
     return {...INITIAL_STATE_USER, ...user};
-  }),
-  error: null,
-});
+  });
+
+  return {
+  ...state,
+  users: [...state.users, ...usersToAdd],
+  next: action.next,
+  }
+};
 
 const applyFetchErrorUsers = (state, action) => ({
+  ...state,
   users: [],
   error: action.error,
 });

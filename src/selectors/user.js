@@ -1,6 +1,9 @@
 const getUsers = ({usersState}) =>
     usersState.users;
 
+const getNextUrl = ({usersState}) =>
+    usersState.next;
+
 const getFetchError = ({usersState}) =>
     usersState.error;
 
@@ -9,6 +12,7 @@ const getUser = ({usersState}, userUrl) =>
 
 export {
   getUsers,
+  getNextUrl,
   getFetchError,
   getUser,
 };
