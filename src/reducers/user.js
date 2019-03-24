@@ -14,18 +14,18 @@ const INITIAL_STATE_USER = {
 };
 
 const applyToggleShowVehiclesUser = (state, action) => {
-  return state.url !== action.userUrl
-      ? state
-      : {...state, showVehicles: !state.showVehicles};
+  return {...state, showVehicles: !state.showVehicles};
 };
 
 const applyAddVehicles = (state, action) => {
-  return state.url !== action.userUrl
-      ? state
-      : {...state, vehicles: action.vehicles};
+  return {...state, vehicles: action.vehicles};
 };
 
 function userReducer(state = INITIAL_STATE_USER, action) {
+  if (state.url !== action.userUrl) {
+    return state;
+  }
+
   switch (action.type) {
     case USER_TOGGLE_SHOW_VEHICLES:
       return applyToggleShowVehiclesUser(state, action);
