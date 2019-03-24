@@ -1,6 +1,12 @@
 import {all, call, put, select} from "redux-saga/effects";
 import {fetchUsers} from "../api/user";
-import {doAddUsers, doAddVehicles, doFetchErrorUsers, doToggleShowVehiclesUser} from "../actions/user";
+import {
+  doAddUsers,
+  doAddVehicles,
+  doFetchErrorUsers,
+  doToggleIsFetchingVehicles,
+  doToggleShowVehiclesUser
+} from "../actions/user";
 import {getUser} from "../selectors/user";
 import {fetchVehicleByUrl} from "../api/vehicle";
 
@@ -18,6 +24,9 @@ function* handleFetchUsers(action) {
 function* handleFetchUserVehicles(action) {
   const {userUrl} = action;
 
+  yield put(doToggleIsFetchingVehicles(userUrl));
+  yield put(doToggleShowVehiclesUser(userUrl));
+
   // TODO: Try to refactor this out (not get state in saga)
   // https://github.com/redux-saga/redux-saga/tree/master/docs/api#notes-13
   const user = yield select(getUser, userUrl);
@@ -28,7 +37,7 @@ function* handleFetchUserVehicles(action) {
   );
 
   yield put(doAddVehicles(userUrl, vehicles));
-  yield put(doToggleShowVehiclesUser(userUrl));
+  yield put(doToggleIsFetchingVehicles(userUrl));
 }
 
 export {

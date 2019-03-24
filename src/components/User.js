@@ -43,9 +43,9 @@ function User(props) {
     mass,
     gender,
     edited,
-    vehicleUrls,
     showVehicles,
     vehicles,
+    isFetchingVehicles,
   } = user;
 
   return (
@@ -64,7 +64,9 @@ function User(props) {
         </UserSpecific>
         {showVehicles &&
         <div>
-          <Vehicles vehicleUrls={vehicleUrls} vehicles={vehicles}/>
+          <Vehicles
+              vehicles={vehicles}
+              isFetchingVehicles={isFetchingVehicles}/>
         </div>
         }
       </Wrapper>
@@ -73,7 +75,7 @@ function User(props) {
 
 // TODO: Check about derived props
 const showVehicles = (dispatch, url, vehicles) => {
-  if (vehicles) {
+  if (vehicles.length) {
     dispatch(doToggleShowVehiclesUser(url));
   } else {
     dispatch(doFetchVehiclesUser(url));

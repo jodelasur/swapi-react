@@ -1,6 +1,6 @@
-import {USER_ADD_VEHICLES, USER_TOGGLE_SHOW_VEHICLES} from "../constants/actionTypes";
+import {USER_ADD_VEHICLES, USER_TOGGLE_IS_FETCHING_VEHICLES, USER_TOGGLE_SHOW_VEHICLES} from "../constants/actionTypes";
 
-const INITIAL_STATE_USER = {
+export const INITIAL_STATE_USER = {
   url: null,
   name: null,
   height: null,
@@ -13,24 +13,30 @@ const INITIAL_STATE_USER = {
   isFetchingVehicles: false,
 };
 
-const applyToggleShowVehiclesUser = (state, action) => {
-  return state.url !== action.userUrl
-      ? state
-      : {...state, showVehicles: !state.showVehicles};
+const applyToggleShowVehiclesUser = (state) => {
+  return {...state, showVehicles: !state.showVehicles};
 };
 
 const applyAddVehicles = (state, action) => {
-  return state.url !== action.userUrl
-      ? state
-      : {...state, vehicles: action.vehicles};
+  return {...state, vehicles: action.vehicles};
+};
+
+const applyToggleIsFetchingVehicles = (state) => {
+  return {...state, isFetchingVehicles: !state.isFetchingVehicles};
 };
 
 function userReducer(state = INITIAL_STATE_USER, action) {
+  if (state.url !== action.userUrl) {
+    return state;
+  }
+
   switch (action.type) {
     case USER_TOGGLE_SHOW_VEHICLES:
-      return applyToggleShowVehiclesUser(state, action);
+      return applyToggleShowVehiclesUser(state);
     case USER_ADD_VEHICLES:
       return applyAddVehicles(state, action);
+    case USER_TOGGLE_IS_FETCHING_VEHICLES:
+      return applyToggleIsFetchingVehicles(state);
     default:
       return state;
   }

@@ -30,7 +30,13 @@ const COLUMNS = {
   },
 };
 
-const Vehicles = ({vehicles}) => {
+const Vehicles = ({vehicles, isFetchingVehicles}) => {
+  if (isFetchingVehicles) {
+    return (
+        <Div>Loading...</Div>
+    )
+  }
+
   if (vehicles.length) {
     return (
         <Div>
