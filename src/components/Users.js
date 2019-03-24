@@ -1,10 +1,11 @@
-import React from "react";
+import React, {Component} from "react";
 import User from "./User";
 import styled from "styled-components";
 import {getNextUrl, getUsers} from "../selectors/user";
 import {connect} from "react-redux";
-import {doFetchUsers} from "../actions/user";
-import Header from "./Header"
+import {doFetchNextUsers} from "../actions/user";
+import Header from "./Header";
+import InfiniteScroll from "react-infinite-scroller";
 
 const Div = styled.div`
   margin: 20px 0;
@@ -37,18 +38,39 @@ const COLUMNS = {
   }
 };
 
-const Users = ({users, next}) => (
-    <Div>
-      <Header columns={COLUMNS}/>
-      {users.map(user =>
-          <User
-              key={user.url}
-              user={user}
-              columns={COLUMNS}
-          />
-      )}
-    </Div>
-);
+class Users extends Component {
+  constructor(props) {
+    super(props);
+    this.handleNext = this.handleNext.bind(this);
+  }
+
+  handleNext() {
+    const {next, onFetchNextUsers} = this.props;
+    onFetchNextUsers(next);
+  }
+
+  render() {
+    const {users, next} = this.props;
+    return (
+        <Div>
+          <Header columns={COLUMNS}/>
+          <InfiniteScroll
+              loadMore={this.handleNext}
+              hasMore={!!next}
+              loader={<div>Loading...</div>}
+          >
+            {users.map(user =>
+                <User
+                    key={user.url}
+                    user={user}
+                    columns={COLUMNS}
+                />
+            )}
+          </InfiniteScroll>
+        </Div>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   users: getUsers(state),
@@ -56,7 +78,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onFetchUsers: query => dispatch(doFetchUsers(query)),
+  onFetchNextUsers: next => dispatch(doFetchNextUsers(next)),
 });
 
 export default connect(
