@@ -1,3 +1,6 @@
+export const SEARCH_QUERY = 'SEARCH_QUERY';
+
+export const USERS_CLEAR = 'USERS_CLEAR';
 export const USERS_ADD = 'USERS_ADD';
 export const USERS_FETCH = 'USERS_FETCH';
 export const USERS_FETCH_NEXT = 'USERS_FETCH_NEXT';

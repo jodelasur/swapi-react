@@ -2,7 +2,7 @@ import {
   USER_ADD_VEHICLES,
   USER_TOGGLE_IS_FETCHING_VEHICLES,
   USER_TOGGLE_SHOW_VEHICLES,
-  USERS_ADD,
+  USERS_ADD, USERS_CLEAR,
   USERS_FETCH_ERROR
 } from "../constants/actionTypes";
 import userReducer, {INITIAL_STATE_USER} from "./user";
@@ -12,6 +12,11 @@ const INITIAL_STATE_USERS = {
   next: null,
   error: null,
 };
+
+const applyClearUsers = state => ({
+  ...state,
+  users: [],
+});
 
 const applyAddUsers = (state, action) => {
   const usersToAdd = action.users.map(user => {
@@ -33,6 +38,8 @@ const applyFetchErrorUsers = (state, action) => ({
 
 function usersReducer(state = INITIAL_STATE_USERS, action) {
   switch (action.type) {
+    case USERS_CLEAR:
+      return applyClearUsers(state);
     case USERS_ADD:
       return applyAddUsers(state, action);
     case USERS_FETCH_ERROR:

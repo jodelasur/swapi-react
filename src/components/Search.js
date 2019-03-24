@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {connect} from "react-redux";
-import {doFetchUsers} from "../actions/user";
+import {doSearch} from "../actions/user";
 
 const Form = styled.form`
   text-align: center;
@@ -45,9 +45,7 @@ class Search extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const {query} = this.state;
-    if (query) {
-      this.props.onFetchUsers(query);
-    }
+    this.props.onSearch(query);
   }
 
   onChange(event) {
@@ -74,7 +72,7 @@ class Search extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onFetchUsers: query => dispatch(doFetchUsers(query)),
+  onSearch: query => dispatch(doSearch(query)),
 });
 
 export default connect(
